@@ -20,10 +20,10 @@ extension ISO_8824.Error {
     /// about the specific cause.
     public struct Code: Hashable, Sendable, CustomStringConvertible {
         @usableFromInline
-        var backingCode: BackingCode
+        var backingCode: Backing
 
         @usableFromInline
-        init(_ backingCode: BackingCode) {
+        init(_ backingCode: Backing) {
             self.backingCode = backingCode
         }
     }

@@ -19,7 +19,7 @@ extension ISO_8824 {
         public var tagNumber: UInt
 
         /// The class of the tag.
-        public var tagClass: TagClass
+        public var tagClass: Class
 
         /// Produces a tag from components.
         ///
@@ -27,7 +27,7 @@ extension ISO_8824 {
         ///     - number: The tag number.
         ///     - tagClass: The class of the ASN.1 tag.
         @inlinable
-        public init(tagWithNumber number: UInt, tagClass: TagClass) {
+        public init(tagWithNumber number: UInt, tagClass: Class) {
             self.tagNumber = number
             self.tagClass = tagClass
         }
@@ -51,7 +51,7 @@ extension ISO_8824.Identifier {
         precondition(shortIdentifier & 0x1F != 0x1F)
         self.init(
             tagWithNumber: UInt(shortIdentifier & 0x1f),
-            tagClass: TagClass(topByteInWireFormat: shortIdentifier)
+            tagClass: Class(topByteInWireFormat: shortIdentifier)
         )
     }
 }

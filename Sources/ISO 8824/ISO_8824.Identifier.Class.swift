@@ -14,7 +14,7 @@
 
 extension ISO_8824.Identifier {
     /// The class of an ASN.1 tag.
-    public enum TagClass: Hashable, Sendable {
+    public enum Class: Hashable, Sendable {
         case universal
         case application
         case contextSpecific
@@ -22,7 +22,7 @@ extension ISO_8824.Identifier {
     }
 }
 
-extension ISO_8824.Identifier.TagClass {
+extension ISO_8824.Identifier.Class {
     @inlinable
     package init(topByteInWireFormat topByte: UInt8) {
         switch topByte >> 6 {

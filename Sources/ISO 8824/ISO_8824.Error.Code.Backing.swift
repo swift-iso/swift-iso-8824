@@ -14,7 +14,7 @@
 
 extension ISO_8824.Error.Code {
     @usableFromInline
-    enum BackingCode {
+    enum Backing {
         case unexpectedFieldType
         case invalidASN1Object
         case invalidASN1IntegerEncoding
@@ -25,4 +25,4 @@ extension ISO_8824.Error.Code {
     }
 }
 
-extension ISO_8824.Error.Code.BackingCode: Sendable {}
+extension ISO_8824.Error.Code.Backing: Sendable {}
