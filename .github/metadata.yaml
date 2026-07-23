@@ -1,0 +1,10 @@
+# .github/metadata.yaml
+description: "Swift implementation of ISO/IEC 8824: Abstract Syntax Notation One (ASN.1)."
+topics:
+  - standards
+  - iso
+  - iso-8824
+  - asn1
+homepage: "https://swift-institute.org"
+readme:
+  family: E
