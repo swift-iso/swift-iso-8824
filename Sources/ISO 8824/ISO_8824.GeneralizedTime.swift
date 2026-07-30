@@ -1,4 +1,4 @@
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftASN1 open source project
 //
@@ -10,7 +10,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 //
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 
 extension ISO_8824 {
     /// GeneralizedTime represents a date and time.
@@ -196,11 +196,11 @@ extension ISO_8824.GeneralizedTime {
         }
     }
 
-    /// The ArraySlice of bytes from which the fractional seconds will be computed. (Preserved due to a possible overflow
-    /// when computing a Double from this ArraySlice.)
     // byte-discipline: [API-BYTE-004] — decimal-ASCII digit payload; candidate for a typed
     // ASCII substrate (`ASCII.Code`) rather than `Byte`; retype deferred (judgment): shared
     // seam with the swift-iso-8825 time parse/serialize halves.
+    /// The ArraySlice of bytes from which the fractional seconds will be computed. (Preserved due to a possible overflow
+    /// when computing a Double from this ArraySlice.)
     @inlinable
     public var rawFractionalSeconds: ArraySlice<UInt8> {
         get {

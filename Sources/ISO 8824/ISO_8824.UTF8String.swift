@@ -1,4 +1,4 @@
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftASN1 open source project
 //
@@ -10,15 +10,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 //
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 
 extension ISO_8824 {
     /// A UTF8String represents a string made up of UTF-8 bytes.
     public struct UTF8String {
-        /// The raw bytes that make up this string.
         // byte-discipline: [API-BYTE-004] byte-domain payload (UTF-8, may exceed 0x7F) —
         // candidate for `ArraySlice<Byte>`; retype deferred (judgment): shared seam with
         // the swift-iso-8825 content-octet views.
+        /// The raw bytes that make up this string.
         public var bytes: ArraySlice<UInt8>
 
         /// Construct a UTF8STRING from raw bytes.

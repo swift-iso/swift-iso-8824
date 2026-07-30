@@ -1,4 +1,4 @@
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftASN1 open source project
 //
@@ -10,7 +10,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 //
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 
 extension ISO_8824 {
     /// A bitstring is a representation of a sequence of bits.
@@ -21,12 +21,12 @@ extension ISO_8824 {
     /// In the case of a bitset, DER has additional requirements as to how to represent the object. This type does not
     /// enforce those additional rules: users are expected to implement that validation themselves.
     public struct BitString {
-        /// The raw bytes that make up this bitstring.
-        ///
-        /// The last ``paddingBits`` number of bits in the final octet of this byte sequence must be zero.
         // byte-discipline: [API-BYTE-004] byte-domain payload with bitwise-only validation —
         // candidate for `ArraySlice<Byte>`; retype deferred (judgment): shared seam with the
         // swift-iso-8825 content-octet views, must retype in lockstep.
+        /// The raw bytes that make up this bitstring.
+        ///
+        /// The last ``paddingBits`` number of bits in the final octet of this byte sequence must be zero.
         public var bytes: ArraySlice<UInt8> {
             didSet {
                 try! self._validate()

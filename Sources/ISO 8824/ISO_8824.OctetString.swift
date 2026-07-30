@@ -1,4 +1,4 @@
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftASN1 open source project
 //
@@ -10,15 +10,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 //
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 
 extension ISO_8824 {
     /// An OCTET STRING is a representation of a string of octets.
     public struct OctetString {
-        /// The octets that make up this OCTET STRING.
         // byte-discipline: [API-BYTE-004] opaque byte-domain payload — candidate for
         // `ArraySlice<Byte>`; retype deferred (judgment): this slice is the shared seam
         // with the swift-iso-8825 content-octet views and must retype in lockstep.
+        /// The octets that make up this OCTET STRING.
         public var bytes: ArraySlice<UInt8>
 
         /// Construct an OCTET STRING from a sequence of bytes.

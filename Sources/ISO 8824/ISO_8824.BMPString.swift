@@ -1,4 +1,4 @@
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftASN1 open source project
 //
@@ -10,17 +10,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 //
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 
 extension ISO_8824 {
     /// BMPString is an uncommon ASN.1 string type.
     ///
     /// This module represents a BMPString as an opaque sequence of bytes.
     public struct BMPString {
-        /// The raw bytes that make up this string.
         // byte-discipline: [API-BYTE-004] opaque byte-domain payload (UTF-16BE code units) —
         // candidate for `ArraySlice<Byte>`; retype deferred (judgment): shared seam with
         // swift-iso-8825.
+        /// The raw bytes that make up this string.
         public var bytes: ArraySlice<UInt8>
 
         /// Construct a BMPString from raw bytes.

@@ -1,4 +1,4 @@
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftASN1 open source project
 //
@@ -10,7 +10,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 //
-//===----------------------------------------------------------------------===//
+// ===----------------------------------------------------------------------===//
 
 extension ISO_8824 {
     /// An Object Identifier is a representation of some kind of object.
@@ -28,12 +28,12 @@ extension ISO_8824 {
     /// This object also has a number of pre-existing values defined in namespaces. Users are encouraged to create their own namespaces to
     /// make it easier to use OIDs in their own serialization code.
     public struct ObjectIdentifier {
+        // byte-discipline: [API-BYTE-004] arithmetic-domain — the packing/unpacking helpers
+        // below do shift/mask accumulation, so the substrate stays UInt8 per the rubric.
         /// The canonical packed component bytes (base-128 subidentifier discipline).
         ///
         /// Encoded-representation seam shared with ISO 8825 (X.690): the transfer-syntax
         /// package serializes OID content octets directly from this view.
-        // byte-discipline: [API-BYTE-004] arithmetic-domain — the packing/unpacking helpers
-        // below do shift/mask accumulation, so the substrate stays UInt8 per the rubric.
         public private(set) var bytes: ArraySlice<UInt8>
 
         @usableFromInline
