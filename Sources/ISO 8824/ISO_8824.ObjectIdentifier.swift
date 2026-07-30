@@ -177,6 +177,9 @@ extension ISO_8824.ObjectIdentifier: ExpressibleByStringLiteral {
     public init(stringLiteral dotRepresentation: String) {
         // To allow for invalid strings to be tested, parsing is performed in a separate initializer that  `throws`
         // (this initializer conforms to ExpressibleByStringLiteral so cannot throw)
+        // REASON: ExpressibleBy*Literal requirement is non-throwing; OID well-formedness is not
+        // statically checkable. Throwing form is `init(dotRepresentation:)`.
+        // swiftlint:disable:next force_try
         try! self.init(dotRepresentation: dotRepresentation)
     }
 
@@ -210,6 +213,9 @@ extension ISO_8824.ObjectIdentifier: ExpressibleByStringLiteral {
 extension ISO_8824.ObjectIdentifier: ExpressibleByArrayLiteral {
     @inlinable
     public init(arrayLiteral elements: UInt...) {
+        // REASON: ExpressibleBy*Literal requirement is non-throwing; OID well-formedness is not
+        // statically checkable. Throwing form is `init(dotRepresentation:)`.
+        // swiftlint:disable:next force_try
         try! self.init(elements: elements)
     }
 }

@@ -24,13 +24,15 @@ extension ISO_8824 {
         // byte-discipline: [API-BYTE-004] byte-domain payload with bitwise-only validation —
         // candidate for `ArraySlice<Byte>`; retype deferred (judgment): shared seam with the
         // swift-iso-8825 content-octet views, must retype in lockstep.
+        @usableFromInline var _bytes: ArraySlice<UInt8>
+        @usableFromInline var _paddingBits: Int
+
         /// The raw bytes that make up this bitstring.
         ///
         /// The last ``paddingBits`` number of bits in the final octet of this byte sequence must be zero.
+        @inlinable
         public var bytes: ArraySlice<UInt8> {
-            didSet {
-                try! self._validate()
-            }
+            self._bytes
         }
 
         /// The number of bits in the last octet of ``bytes`` that are not part of this bitstring.
@@ -38,11 +40,9 @@ extension ISO_8824 {
         /// The excluded bits are the least significant bits.
         ///
         /// If ``bytes`` is empty then this value must be 0.
+        @inlinable
         public var paddingBits: Int {
-            didSet {
-                precondition((0..<8).contains(self.paddingBits))
-                try! self._validate()
-            }
+            self._paddingBits
         }
 
         /// Construct an ``ISO_8824/BitString`` from raw components.
@@ -51,10 +51,10 @@ extension ISO_8824 {
         ///     - bytes: The bytes to represent this bitstring
         ///     - paddingBits: The number of bits in the trailing byte that are not actually part of this bitstring.
         @inlinable
-        public init(bytes: ArraySlice<UInt8>, paddingBits: Int = 0) {
-            self.bytes = bytes
-            self.paddingBits = paddingBits
-            try! self._validate()
+        public init(bytes: ArraySlice<UInt8>, paddingBits: Int = 0) throws(ISO_8824.Error) {
+            self._bytes = bytes
+            self._paddingBits = paddingBits
+            try self._validate()
         }
     }
 }
@@ -70,6 +70,12 @@ extension ISO_8824.BitString {
 
     @inlinable
     package func _validate() throws(ISO_8824.Error) {
+        guard (0..<8).contains(self.paddingBits) else {
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid number of padding bits for BitString: \(self.paddingBits)"
+            )
+        }
+
         guard let finalByte = self.bytes.last else {
             if self.paddingBits != 0 {
                 // If there are no bytes, there must be no padding bits.

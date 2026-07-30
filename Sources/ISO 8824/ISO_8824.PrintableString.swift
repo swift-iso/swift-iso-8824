@@ -97,6 +97,9 @@ extension ISO_8824.PrintableString: Sendable {}
 extension ISO_8824.PrintableString: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
+        // REASON: ExpressibleBy*Literal requirement is non-throwing; literal validity is not
+        // statically checkable. Throwing form is `init(contentBytes:)`.
+        // swiftlint:disable:next force_try
         try! self.init(contentBytes: ArraySlice(value.utf8))
     }
 }

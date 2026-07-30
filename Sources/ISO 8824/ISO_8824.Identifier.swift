@@ -58,6 +58,9 @@ extension ISO_8824.Identifier {
 
 extension ISO_8824.Identifier {
     /// This tag represents an OBJECT IDENTIFIER.
+    // swift-format-ignore: DontRepeatTypeInStaticProperties
+    // REASON: X.680 universal type name OBJECT IDENTIFIER; the suggested `.object` names no
+    // ASN.1 type and would break the spec-mirroring correspondence this block depends on.
     public static let objectIdentifier = ISO_8824.Identifier(shortIdentifier: 0x06)
 
     /// This tag represents a BIT STRING.

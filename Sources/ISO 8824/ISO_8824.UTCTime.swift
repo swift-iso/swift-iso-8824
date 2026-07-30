@@ -64,73 +64,37 @@ extension ISO_8824.UTCTime {
     /// The numerical year.
     @inlinable
     public var year: Int {
-        get {
-            return self._year
-        }
-        set {
-            self._year = newValue
-            try! self._validate()
-        }
+        self._year
     }
 
     /// The numerical month.
     @inlinable
     public var month: Int {
-        get {
-            return self._month
-        }
-        set {
-            self._month = newValue
-            try! self._validate()
-        }
+        self._month
     }
 
     /// The numerical day.
     @inlinable
     public var day: Int {
-        get {
-            return self._day
-        }
-        set {
-            self._day = newValue
-            try! self._validate()
-        }
+        self._day
     }
 
     /// The numerical hours.
     @inlinable
     public var hours: Int {
-        get {
-            return self._hours
-        }
-        set {
-            self._hours = newValue
-            try! self._validate()
-        }
+        self._hours
     }
 
     /// The numerical minutes.
     @inlinable
     public var minutes: Int {
-        get {
-            return self._minutes
-        }
-        set {
-            self._minutes = newValue
-            try! self._validate()
-        }
+        self._minutes
     }
 
     /// The numerical seconds.
     @inlinable
     public var seconds: Int {
-        get {
-            return self._seconds
-        }
-        set {
-            self._seconds = newValue
-            try! self._validate()
-        }
+        self._seconds
     }
 
     @inlinable
