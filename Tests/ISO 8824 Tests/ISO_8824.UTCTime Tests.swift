@@ -33,25 +33,39 @@ extension ISO_8824.UTCTime.Test {
         let original = try ISO_8824.UTCTime(year: 2020, month: 03, day: 03, hours: 03, minutes: 03, seconds: 03)
 
         func modify(
-            _ field: WritableKeyPath<ISO_8824.UTCTime, Int>,
             of time: ISO_8824.UTCTime,
-            by modifier: Int
-        ) -> ISO_8824.UTCTime {
-            var copy = time
-            copy[keyPath: field] += modifier
-            return copy
+            year: Int = 0,
+            month: Int = 0,
+            day: Int = 0,
+            hours: Int = 0,
+            minutes: Int = 0,
+            seconds: Int = 0
+        ) throws -> ISO_8824.UTCTime {
+            try ISO_8824.UTCTime(
+                year: time.year + year,
+                month: time.month + month,
+                day: time.day + day,
+                hours: time.hours + hours,
+                minutes: time.minutes + minutes,
+                seconds: time.seconds + seconds
+            )
         }
 
-        let integerTransformable: [WritableKeyPath<ISO_8824.UTCTime, Int>] = [
-            \.year, \.month, \.day, \.hours, \.minutes, \.seconds,
+        let integerTransformable: [(ISO_8824.UTCTime, Int) throws -> ISO_8824.UTCTime] = [
+            { try modify(of: $0, year: $1) },
+            { try modify(of: $0, month: $1) },
+            { try modify(of: $0, day: $1) },
+            { try modify(of: $0, hours: $1) },
+            { try modify(of: $0, minutes: $1) },
+            { try modify(of: $0, seconds: $1) },
         ]
 
         var transformationsAndResults: [(ISO_8824.UTCTime, ExpectedComparisonResult)] = []
         transformationsAndResults.append((original, .equal))
 
         for transform in integerTransformable {
-            transformationsAndResults.append((modify(transform, of: original, by: 1), .greaterThan))
-            transformationsAndResults.append((modify(transform, of: original, by: -1), .lessThan))
+            transformationsAndResults.append((try transform(original, 1), .greaterThan))
+            transformationsAndResults.append((try transform(original, -1), .lessThan))
         }
 
         transformationsAndResults.append(

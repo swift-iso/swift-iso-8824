@@ -163,30 +163,50 @@ extension ISO_8824.GeneralizedTime.Test {
             fractionalSeconds: 0.105
         )
 
-        func modify<Modifiable: AdditiveArithmetic>(
-            _ field: WritableKeyPath<ISO_8824.GeneralizedTime, Modifiable>,
+        func modify(
             of time: ISO_8824.GeneralizedTime,
-            by modifier: Modifiable
-        ) -> ISO_8824.GeneralizedTime {
-            var copy = time
-            copy[keyPath: field] += modifier
-            return copy
+            year: Int = 0,
+            month: Int = 0,
+            day: Int = 0,
+            hours: Int = 0,
+            minutes: Int = 0,
+            seconds: Int = 0,
+            fractionalSeconds: Double = 0
+        ) throws -> ISO_8824.GeneralizedTime {
+            try ISO_8824.GeneralizedTime(
+                year: time.year + year,
+                month: time.month + month,
+                day: time.day + day,
+                hours: time.hours + hours,
+                minutes: time.minutes + minutes,
+                seconds: time.seconds + seconds,
+                fractionalSeconds: time.fractionalSeconds + fractionalSeconds
+            )
         }
 
-        let integerTransformable: [WritableKeyPath<ISO_8824.GeneralizedTime, Int>] = [
-            \.year, \.month, \.day, \.hours, \.minutes, \.seconds,
+        let integerTransformable: [(ISO_8824.GeneralizedTime, Int) throws -> ISO_8824.GeneralizedTime] = [
+            { try modify(of: $0, year: $1) },
+            { try modify(of: $0, month: $1) },
+            { try modify(of: $0, day: $1) },
+            { try modify(of: $0, hours: $1) },
+            { try modify(of: $0, minutes: $1) },
+            { try modify(of: $0, seconds: $1) },
         ]
 
         var transformationsAndResults: [(ISO_8824.GeneralizedTime, ExpectedComparisonResult)] = []
         transformationsAndResults.append((original, .equal))
 
         for transform in integerTransformable {
-            transformationsAndResults.append((modify(transform, of: original, by: 1), .greaterThan))
-            transformationsAndResults.append((modify(transform, of: original, by: -1), .lessThan))
+            transformationsAndResults.append((try transform(original, 1), .greaterThan))
+            transformationsAndResults.append((try transform(original, -1), .lessThan))
         }
 
-        transformationsAndResults.append((modify(\.fractionalSeconds, of: original, by: 0.1), .greaterThan))
-        transformationsAndResults.append((modify(\.fractionalSeconds, of: original, by: -0.1), .lessThan))
+        transformationsAndResults.append(
+            (try modify(of: original, fractionalSeconds: 0.1), .greaterThan)
+        )
+        transformationsAndResults.append(
+            (try modify(of: original, fractionalSeconds: -0.1), .lessThan)
+        )
 
         transformationsAndResults.append(
             (
