@@ -205,9 +205,15 @@ extension ISO_8824.GeneralizedTime {
         }
 
         // When `rawFractionalSeconds` is converted to a `Double`, it must be equal to `fractionalSeconds`.
-        assert(
-            (try? Double(fromRawFractionalSeconds: self._rawFractionalSeconds)) == self._fractionalSeconds
-        )
+        let convertedFractionalSeconds: Double?
+        do throws(ISO_8824.Error) {
+            convertedFractionalSeconds = try Double(
+                fromRawFractionalSeconds: self._rawFractionalSeconds
+            )
+        } catch {
+            convertedFractionalSeconds = nil
+        }
+        assert(convertedFractionalSeconds == self._fractionalSeconds)
     }
 }
 

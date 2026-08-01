@@ -27,24 +27,6 @@ extension ISO_8824 {
         @usableFromInline var _bytes: ArraySlice<UInt8>
         @usableFromInline var _paddingBits: Int
 
-        /// The raw bytes that make up this bitstring.
-        ///
-        /// The last ``paddingBits`` number of bits in the final octet of this byte sequence must be zero.
-        @inlinable
-        public var bytes: ArraySlice<UInt8> {
-            self._bytes
-        }
-
-        /// The number of bits in the last octet of ``bytes`` that are not part of this bitstring.
-        ///
-        /// The excluded bits are the least significant bits.
-        ///
-        /// If ``bytes`` is empty then this value must be 0.
-        @inlinable
-        public var paddingBits: Int {
-            self._paddingBits
-        }
-
         /// Construct an ``ISO_8824/BitString`` from raw components.
         ///
         /// - parameters:
@@ -56,6 +38,26 @@ extension ISO_8824 {
             self._paddingBits = paddingBits
             try self._validate()
         }
+    }
+}
+
+extension ISO_8824.BitString {
+    /// The raw bytes that make up this bitstring.
+    ///
+    /// The last ``paddingBits`` number of bits in the final octet of this byte sequence must be zero.
+    @inlinable
+    public var bytes: ArraySlice<UInt8> {
+        self._bytes
+    }
+
+    /// The number of bits in the last octet of ``bytes`` that are not part of this bitstring.
+    ///
+    /// The excluded bits are the least significant bits.
+    ///
+    /// If ``bytes`` is empty then this value must be 0.
+    @inlinable
+    public var paddingBits: Int {
+        self._paddingBits
     }
 }
 
