@@ -93,7 +93,9 @@ extension ISO_8824.ObjectIdentifier.NameAttributes {
 
     /// The 'dc' ('domainComponent' in RFC 1274) attribute type is a string
     /// holding one component, a label, of a DNS domain name naming a host.
-    public static let domainComponent: ISO_8824.ObjectIdentifier = [0, 9, 2342, 19_200_300, 100, 1, 25]
+    public static let domainComponent: ISO_8824.ObjectIdentifier = [
+        0, 9, 2342, 19_200_300, 100, 1, 25,
+    ]
 
     /// The emailAddress attribute type specifies the electronic-mail address
     /// or addresses of a subject as an unstructured ASCII string.

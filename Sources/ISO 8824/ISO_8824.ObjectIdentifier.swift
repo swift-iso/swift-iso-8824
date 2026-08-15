@@ -67,7 +67,9 @@ extension ISO_8824.ObjectIdentifier {
     /// Encoded-representation seam shared with ISO 8825 (X.690): the transfer-syntax
     /// package validates OID content octets through this entry point.
     @inlinable
-    public static func validateObjectIdentifierInEncodedForm(_ content: ArraySlice<UInt8>) throws(ISO_8824.Error) {
+    public static func validateObjectIdentifierInEncodedForm(
+        _ content: ArraySlice<UInt8>
+    ) throws(ISO_8824.Error) {
         var content = content
 
         guard content.count >= 1 else {
@@ -131,7 +133,9 @@ extension ISO_8824.ObjectIdentifier {
             )
         }
 
-        let (firstSubcomponent, secondSubcomponent) = firstEncodedSubcomponent.quotientAndRemainder(dividingBy: 40)
+        let (firstSubcomponent, secondSubcomponent) = firstEncodedSubcomponent.quotientAndRemainder(
+            dividingBy: 40
+        )
         oidComponents.append(firstSubcomponent)
         oidComponents.append(secondSubcomponent)
         oidComponents.append(contentsOf: subcomponentSlice)
@@ -192,7 +196,7 @@ extension ISO_8824.ObjectIdentifier: ExpressibleByStringLiteral {
             omittingEmptySubsequences: false
         )
 
-        let elements = try octetArray.map { (octet) throws(ISO_8824.Error) -> UInt in
+        let elements = try octetArray.map { octet throws(ISO_8824.Error) -> UInt in
             guard let uintOctet = UInt(Substring(octet)) else {
                 throw ISO_8824.Error.invalidStringRepresentation(reason: "Invalid octet in OID")
             }
@@ -245,7 +249,9 @@ extension ArraySlice where Element == UInt8 {
         guard let firstByte = oidSlice.first, firstByte != 0x80 else {
             // If the first byte is 0x80 then we have a leading 0 byte. All numbers encoded this way
             // need to be encoded in the minimal number of bytes, so we need to reject this.
-            throw ISO_8824.Error.invalidASN1Object(reason: "OID subidentifier encoded with leading 0 byte")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "OID subidentifier encoded with leading 0 byte"
+            )
         }
 
         self = self[self.index(after: subidentifierEndIndex)...]
@@ -261,7 +267,8 @@ extension UInt {
     /// Encoded-representation seam shared with ISO 8825 (X.690): public because the
     /// `@inlinable` seam readers above compose through it.
     @inlinable
-    public init<Bytes: Swift.Collection>(sevenBitBigEndianBytes bytes: Bytes) throws(ISO_8824.Error) where Bytes.Element == UInt8 {
+    public init<Bytes: Swift.Collection>(sevenBitBigEndianBytes bytes: Bytes) throws(ISO_8824.Error)
+    where Bytes.Element == UInt8 {
         // We need to know how many bytes we _need_ to store this "int". As a base optimization we refuse to parse
         // anything larger than 9 bytes wide, even though conceptually we could fit a few more bits.
         guard ((bytes.count * 7) + 7) / 8 <= MemoryLayout<UInt>.size else {

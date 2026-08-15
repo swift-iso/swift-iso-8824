@@ -31,17 +31,23 @@ extension ISO_8824.ObjectIdentifier.AlgorithmIdentifier {
     /// Identifies a PKCS#1v1.5 RSA signature using SHA256 as the hash algorithm.
     ///
     /// This identifier is defined in RFC 4055. When used, the parameters MUST be NULL.
-    public static let sha256WithRSAEncryption: ISO_8824.ObjectIdentifier = [1, 2, 840, 11_3549, 1, 1, 11]
+    public static let sha256WithRSAEncryption: ISO_8824.ObjectIdentifier = [
+        1, 2, 840, 11_3549, 1, 1, 11,
+    ]
 
     /// Identifies a PKCS#1v1.5 RSA signature using SHA384 as the hash algorithm.
     ///
     /// This identifier is defined in RFC 4055. When used, the parameters MUST be NULL.
-    public static let sha384WithRSAEncryption: ISO_8824.ObjectIdentifier = [1, 2, 840, 11_3549, 1, 1, 12]
+    public static let sha384WithRSAEncryption: ISO_8824.ObjectIdentifier = [
+        1, 2, 840, 11_3549, 1, 1, 12,
+    ]
 
     /// Identifies a PKCS#1v1.5 RSA signature using SHA512 as the hash algorithm.
     ///
     /// This identifier is defined in RFC 4055. When used, the parameters MUST be NULL.
-    public static let sha512WithRSAEncryption: ISO_8824.ObjectIdentifier = [1, 2, 840, 11_3549, 1, 1, 13]
+    public static let sha512WithRSAEncryption: ISO_8824.ObjectIdentifier = [
+        1, 2, 840, 11_3549, 1, 1, 13,
+    ]
 
     /// Identifies an RSA PSS signature.
     ///

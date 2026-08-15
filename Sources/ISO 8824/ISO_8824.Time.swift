@@ -27,32 +27,44 @@ extension ISO_8824.Time {
         switch month {
         case 1:
             return 31
+
         case 2:
             // This one has a dependency on the year!
             // A leap year occurs in any year divisible by 4, except when that year is divisible by 100,
             // unless the year is divisible by 400.
             let isLeapYear = (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))
             return isLeapYear ? 29 : 28
+
         case 3:
             return 31
+
         case 4:
             return 30
+
         case 5:
             return 31
+
         case 6:
             return 30
+
         case 7:
             return 31
+
         case 8:
             return 31
+
         case 9:
             return 30
+
         case 10:
             return 31
+
         case 11:
             return 30
+
         case 12:
             return 31
+
         default:
             return nil
         }
@@ -89,14 +101,18 @@ extension ArraySlice where Element == UInt8 {
 extension Double {
     /// Computes the numerical fractional seconds from the canonical raw decimal-ASCII digits.
     @inlinable
-    package init(fromRawFractionalSeconds rawFractionalSeconds: ArraySlice<UInt8>) throws(ISO_8824.Error) {
+    package init(
+        fromRawFractionalSeconds rawFractionalSeconds: ArraySlice<UInt8>
+    ) throws(ISO_8824.Error) {
         if rawFractionalSeconds.count == 0 {
             self = 0
             return
         }
 
         if rawFractionalSeconds.last == UInt8(ascii: "0") {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Trailing zeros in raw fractional seconds")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Trailing zeros in raw fractional seconds"
+            )
         }
 
         let rawFractionalSecondsAsString = String(decoding: rawFractionalSeconds, as: UTF8.self)

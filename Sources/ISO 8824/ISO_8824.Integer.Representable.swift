@@ -29,7 +29,9 @@ extension ISO_8824.Integer {
         static var isSigned: Bool { get }
 
         /// Provide the big-endian bytes corresponding to this integer.
-        func withBigEndianIntegerBytes<ReturnType, E: Swift.Error>(_ body: (IntegerBytes) throws(E) -> ReturnType) throws(E) -> ReturnType
+        func withBigEndianIntegerBytes<ReturnType, E: Swift.Error>(
+            _ body: (IntegerBytes) throws(E) -> ReturnType
+        ) throws(E) -> ReturnType
     }
 }
 

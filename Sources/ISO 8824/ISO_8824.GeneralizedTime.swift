@@ -93,7 +93,9 @@ extension ISO_8824 {
             self._minutes = minutes
             self._seconds = seconds
             self._rawFractionalSeconds = rawFractionalSeconds
-            self._fractionalSeconds = try Double(fromRawFractionalSeconds: self._rawFractionalSeconds)
+            self._fractionalSeconds = try Double(
+                fromRawFractionalSeconds: self._rawFractionalSeconds
+            )
 
             try self._validate()
         }
@@ -165,7 +167,9 @@ extension ISO_8824.GeneralizedTime {
     package func _validate() throws(ISO_8824.Error) {
         // Validate that the structure is well-formed.
         guard self._year >= 0 && self._year <= 9999 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid year for GeneralizedTime \(self._year)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid year for GeneralizedTime \(self._year)"
+            )
         }
 
         // This also validates the month.
@@ -182,11 +186,15 @@ extension ISO_8824.GeneralizedTime {
         }
 
         guard self._hours >= 0 && self._hours < 24 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid hour for GeneralizedTime \(self._hours)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid hour for GeneralizedTime \(self._hours)"
+            )
         }
 
         guard self._minutes >= 0 && self._minutes < 60 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid minute for GeneralizedTime \(self._minutes)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid minute for GeneralizedTime \(self._minutes)"
+            )
         }
 
         // We allow leap seconds here, but don't validate it.
@@ -194,7 +202,9 @@ extension ISO_8824.GeneralizedTime {
         // comparison here. We should consider whether this needs to be transformable
         // to `Date` or similar.
         guard self._seconds >= 0 && self._seconds <= 61 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid seconds for Generalized \(self._seconds)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid seconds for Generalized \(self._seconds)"
+            )
         }
 
         // Fractional seconds may not be negative and may not be 1 or more.
@@ -224,8 +234,16 @@ extension ISO_8824.GeneralizedTime: Comparable {
         if lhs.month < rhs.month { return true } else if lhs.month > rhs.month { return false }
         if lhs.day < rhs.day { return true } else if lhs.day > rhs.day { return false }
         if lhs.hours < rhs.hours { return true } else if lhs.hours > rhs.hours { return false }
-        if lhs.minutes < rhs.minutes { return true } else if lhs.minutes > rhs.minutes { return false }
-        if lhs.seconds < rhs.seconds { return true } else if lhs.seconds > rhs.seconds { return false }
+        if lhs.minutes < rhs.minutes {
+            return true
+        } else if lhs.minutes > rhs.minutes {
+            return false
+        }
+        if lhs.seconds < rhs.seconds {
+            return true
+        } else if lhs.seconds > rhs.seconds {
+            return false
+        }
         if lhs.fractionalSeconds < rhs.fractionalSeconds {
             return true
         } else if lhs.fractionalSeconds > rhs.fractionalSeconds {

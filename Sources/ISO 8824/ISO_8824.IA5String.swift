@@ -36,7 +36,9 @@ extension ISO_8824 {
         public init(contentBytes: ArraySlice<UInt8>) throws(ISO_8824.Error) {
             self.bytes = contentBytes
             guard Self._isValid(self.bytes) else {
-                throw ISO_8824.Error.invalidStringRepresentation(reason: "Invalid bytes for IA5String")
+                throw ISO_8824.Error.invalidStringRepresentation(
+                    reason: "Invalid bytes for IA5String"
+                )
             }
         }
     }
@@ -62,7 +64,9 @@ extension ISO_8824.IA5String {
     }
 
     @inlinable
-    public func withUnsafeBytes<R, E: Swift.Error>(_ body: (UnsafeRawBufferPointer) throws(E) -> R) throws(E) -> R {
+    public func withUnsafeBytes<R, E: Swift.Error>(
+        _ body: (UnsafeRawBufferPointer) throws(E) -> R
+    ) throws(E) -> R {
         let result = unsafe self.bytes.withUnsafeBytes { buffer in
             Result { () throws(E) -> R in unsafe try body(buffer) }
         }

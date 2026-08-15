@@ -47,7 +47,9 @@ extension ISO_8824.Error.Code {
     public static let unsupportedFieldLength = ISO_8824.Error.Code(.unsupportedFieldLength)
 
     /// A string was invalid.
-    public static let invalidStringRepresentation = ISO_8824.Error.Code(.invalidStringRepresentation)
+    public static let invalidStringRepresentation = ISO_8824.Error.Code(
+        .invalidStringRepresentation
+    )
 
     /// Too few OID components were provided. There must be at least two or more.
     public static let tooFewOIDComponents = ISO_8824.Error.Code(.tooFewOIDComponents)
