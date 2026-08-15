@@ -59,7 +59,9 @@ extension ISO_8824.PrintableString.Test {
     @Test
     func `contiguous bytes view matches content`() throws {
         let string = try ISO_8824.PrintableString(contentBytes: [0x54, 0x65, 0x73, 0x74])
-        unsafe string.withUnsafeBytes { #expect(unsafe $0.elementsEqual([0x54, 0x65, 0x73, 0x74])) }
+        unsafe string.withUnsafeBytes {
+            #expect(unsafe $0.elementsEqual([0x54, 0x65, 0x73, 0x74]))
+        }
     }
 
     @Test
@@ -86,6 +88,7 @@ extension ISO_8824.PrintableString.Test {
                 UInt8(ascii: "="), UInt8(ascii: " "),
                 UInt8(ascii: ","), UInt8(ascii: "."):
                 return false
+
             default:
                 return true
             }
@@ -94,13 +97,19 @@ extension ISO_8824.PrintableString.Test {
         let validBytes = allBytes.filter { !invalidBytes.contains($0) }
 
         for byte in invalidBytes {
-            #expect(throws: ISO_8824.Error.self) { try ISO_8824.PrintableString(contentBytes: [byte]) }
-            #expect(throws: ISO_8824.Error.self) { try ISO_8824.PrintableString(String(UnicodeScalar(byte))) }
+            #expect(throws: ISO_8824.Error.self) {
+                try ISO_8824.PrintableString(contentBytes: [byte])
+            }
+            #expect(throws: ISO_8824.Error.self) {
+                try ISO_8824.PrintableString(String(UnicodeScalar(byte)))
+            }
         }
 
         for byte in validBytes {
             #expect(throws: Never.self) { try ISO_8824.PrintableString(contentBytes: [byte]) }
-            #expect(throws: Never.self) { try ISO_8824.PrintableString(String(UnicodeScalar(byte))) }
+            #expect(throws: Never.self) {
+                try ISO_8824.PrintableString(String(UnicodeScalar(byte)))
+            }
         }
     }
 }
@@ -114,7 +123,9 @@ extension ISO_8824.VisibleString.Test {
     @Test
     func `contiguous bytes view matches content`() throws {
         let string = try ISO_8824.VisibleString(contentBytes: [0x20, 0x30, 0x7a, 0x7e])
-        unsafe string.withUnsafeBytes { #expect(unsafe $0.elementsEqual([0x20, 0x30, 0x7a, 0x7e])) }
+        unsafe string.withUnsafeBytes {
+            #expect(unsafe $0.elementsEqual([0x20, 0x30, 0x7a, 0x7e]))
+        }
     }
 
     @Test
@@ -132,8 +143,12 @@ extension ISO_8824.VisibleString.Test {
         let validBytes = allBytes.filter { !invalidBytes.contains($0) }
 
         for byte in invalidBytes {
-            #expect(throws: ISO_8824.Error.self) { try ISO_8824.VisibleString(contentBytes: [byte]) }
-            #expect(throws: ISO_8824.Error.self) { try ISO_8824.VisibleString(String(UnicodeScalar(byte))) }
+            #expect(throws: ISO_8824.Error.self) {
+                try ISO_8824.VisibleString(contentBytes: [byte])
+            }
+            #expect(throws: ISO_8824.Error.self) {
+                try ISO_8824.VisibleString(String(UnicodeScalar(byte)))
+            }
         }
 
         for byte in validBytes {
@@ -202,7 +217,9 @@ extension ISO_8824.IA5String.Test {
 
         for byte in invalidBytes {
             #expect(throws: ISO_8824.Error.self) { try ISO_8824.IA5String(contentBytes: [byte]) }
-            #expect(throws: ISO_8824.Error.self) { try ISO_8824.IA5String(String(UnicodeScalar(byte))) }
+            #expect(throws: ISO_8824.Error.self) {
+                try ISO_8824.IA5String(String(UnicodeScalar(byte)))
+            }
         }
 
         for byte in validBytes {

@@ -48,7 +48,9 @@ extension ISO_8824.OctetString: Sendable {}
 
 extension ISO_8824.OctetString {
     @inlinable
-    public func withUnsafeBytes<R, E: Swift.Error>(_ body: (UnsafeRawBufferPointer) throws(E) -> R) throws(E) -> R {
+    public func withUnsafeBytes<R, E: Swift.Error>(
+        _ body: (UnsafeRawBufferPointer) throws(E) -> R
+    ) throws(E) -> R {
         let result = unsafe self.bytes.withUnsafeBytes { buffer in
             Result { () throws(E) -> R in unsafe try body(buffer) }
         }

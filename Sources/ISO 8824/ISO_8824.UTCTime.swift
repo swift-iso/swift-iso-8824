@@ -39,7 +39,14 @@ extension ISO_8824 {
         ///     - minutes: The numerical minutes
         ///     - seconds: The numerical seconds
         @inlinable
-        public init(year: Int, month: Int, day: Int, hours: Int, minutes: Int, seconds: Int) throws(ISO_8824.Error) {
+        public init(
+            year: Int,
+            month: Int,
+            day: Int,
+            hours: Int,
+            minutes: Int,
+            seconds: Int
+        ) throws(ISO_8824.Error) {
             self._year = year
             self._month = month
             self._day = day
@@ -107,19 +114,27 @@ extension ISO_8824.UTCTime {
 
         // This also validates the month.
         guard let daysInMonth = ISO_8824.Time.daysInMonth(self._month, ofYear: self._year) else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid month \(self._month) of year \(self.year) for UTCTime")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid month \(self._month) of year \(self.year) for UTCTime"
+            )
         }
 
         guard self._day >= 1 && self._day <= daysInMonth else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid day \(self._day) of month \(self._month) for UTCTime")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid day \(self._day) of month \(self._month) for UTCTime"
+            )
         }
 
         guard self._hours >= 0 && self._hours < 24 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid hour for UTCTime \(self._hours)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid hour for UTCTime \(self._hours)"
+            )
         }
 
         guard self._minutes >= 0 && self._minutes < 60 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid minute for UTCTime \(self._minutes)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid minute for UTCTime \(self._minutes)"
+            )
         }
 
         // We allow leap seconds here, but don't validate it.
@@ -127,7 +142,9 @@ extension ISO_8824.UTCTime {
         // comparison here. We should consider whether this needs to be transformable
         // to `Date` or similar.
         guard self._seconds >= 0 && self._seconds <= 61 else {
-            throw ISO_8824.Error.invalidASN1Object(reason: "Invalid seconds for UTCTime \(self._seconds)")
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid seconds for UTCTime \(self._seconds)"
+            )
         }
     }
 }
@@ -139,7 +156,11 @@ extension ISO_8824.UTCTime: Comparable {
         if lhs.month < rhs.month { return true } else if lhs.month > rhs.month { return false }
         if lhs.day < rhs.day { return true } else if lhs.day > rhs.day { return false }
         if lhs.hours < rhs.hours { return true } else if lhs.hours > rhs.hours { return false }
-        if lhs.minutes < rhs.minutes { return true } else if lhs.minutes > rhs.minutes { return false }
+        if lhs.minutes < rhs.minutes {
+            return true
+        } else if lhs.minutes > rhs.minutes {
+            return false
+        }
         return lhs.seconds < rhs.seconds
     }
 }

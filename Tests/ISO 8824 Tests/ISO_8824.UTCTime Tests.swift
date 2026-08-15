@@ -30,7 +30,14 @@ extension ISO_8824.UTCTime.Test {
             case greaterThan
         }
 
-        let original = try ISO_8824.UTCTime(year: 2020, month: 03, day: 03, hours: 03, minutes: 03, seconds: 03)
+        let original = try ISO_8824.UTCTime(
+            year: 2020,
+            month: 03,
+            day: 03,
+            hours: 03,
+            minutes: 03,
+            seconds: 03
+        )
 
         func modify(
             of time: ISO_8824.UTCTime,
@@ -70,7 +77,14 @@ extension ISO_8824.UTCTime.Test {
 
         transformationsAndResults.append(
             (
-                try ISO_8824.UTCTime(year: 2019, month: 08, day: 08, hours: 08, minutes: 08, seconds: 08),
+                try ISO_8824.UTCTime(
+                    year: 2019,
+                    month: 08,
+                    day: 08,
+                    hours: 08,
+                    minutes: 08,
+                    seconds: 08
+                ),
                 .lessThan
             )
         )
@@ -82,11 +96,13 @@ extension ISO_8824.UTCTime.Test {
                 #expect(newValue <= original)
                 #expect(original > newValue)
                 #expect(original >= newValue)
+
             case .equal:
                 #expect(newValue >= original)
                 #expect(original >= newValue)
                 #expect(newValue <= original)
                 #expect(original <= newValue)
+
             case .greaterThan:
                 #expect(newValue > original)
                 #expect(newValue >= original)

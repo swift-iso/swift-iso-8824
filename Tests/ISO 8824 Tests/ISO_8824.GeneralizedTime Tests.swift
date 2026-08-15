@@ -24,33 +24,60 @@ extension ISO_8824.GeneralizedTime {
 extension ISO_8824.GeneralizedTime.Test {
     @Test(
         arguments: [
-            (year: -1, month: 1, day: 1, hours: 1, minutes: 1, seconds: 1),  // Invalid year, negative
-            (year: 2000, month: 0, day: 1, hours: 1, minutes: 1, seconds: 1),  // Invalid month, zero
-            (year: 2000, month: -1, day: 1, hours: 1, minutes: 1, seconds: 1),  // Invalid month, negative
-            (year: 2000, month: 13, day: 1, hours: 1, minutes: 1, seconds: 1),  // Invalid month, too large
-            (year: 2000, month: 1, day: 0, hours: 1, minutes: 1, seconds: 1),  // Invalid day, zero
-            (year: 2000, month: 1, day: -1, hours: 1, minutes: 1, seconds: 1),  // Invalid day, negative
-            (year: 2000, month: 1, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in January
-            (year: 2021, month: 2, day: 29, hours: 1, minutes: 1, seconds: 1),  // only 28 days in February 2021
-            (year: 2020, month: 2, day: 30, hours: 1, minutes: 1, seconds: 1),  // only 29 days in February 2020
-            (year: 2100, month: 2, day: 29, hours: 1, minutes: 1, seconds: 1),  // only 28 days in February 2100
-            (year: 2000, month: 2, day: 30, hours: 1, minutes: 1, seconds: 1),  // only 29 days in February 2000
-            (year: 2000, month: 3, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in March
-            (year: 2000, month: 4, day: 31, hours: 1, minutes: 1, seconds: 1),  // only 30 days in April
-            (year: 2000, month: 5, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in May
-            (year: 2000, month: 6, day: 31, hours: 1, minutes: 1, seconds: 1),  // only 30 days in June
-            (year: 2000, month: 7, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in July
-            (year: 2000, month: 8, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in August
-            (year: 2000, month: 9, day: 31, hours: 1, minutes: 1, seconds: 1),  // only 30 days in September
-            (year: 2000, month: 10, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in October
-            (year: 2000, month: 11, day: 31, hours: 1, minutes: 1, seconds: 1),  // only 30 days in November
-            (year: 2000, month: 11, day: 32, hours: 1, minutes: 1, seconds: 1),  // only 31 days in December (upstream vector)
-            (year: 2000, month: 1, day: 1, hours: -1, minutes: 1, seconds: 1),  // Invalid hour, negative
-            (year: 2000, month: 1, day: 1, hours: 24, minutes: 0, seconds: 0),  // Invalid hour, 24
-            (year: 2000, month: 1, day: 1, hours: 0, minutes: -1, seconds: 1),  // Invalid minute, negative
-            (year: 2000, month: 1, day: 1, hours: 0, minutes: 60, seconds: 0),  // Invalid minute, 60
-            (year: 2000, month: 1, day: 1, hours: 0, minutes: 0, seconds: -1),  // Invalid second, negative
-            (year: 2000, month: 1, day: 1, hours: 0, minutes: 0, seconds: 62),  // Invalid second, 62 (we allow some leap seconds)
+            // Invalid year, negative
+            (year: -1, month: 1, day: 1, hours: 1, minutes: 1, seconds: 1),
+            // Invalid month, zero
+            (year: 2000, month: 0, day: 1, hours: 1, minutes: 1, seconds: 1),
+            // Invalid month, negative
+            (year: 2000, month: -1, day: 1, hours: 1, minutes: 1, seconds: 1),
+            // Invalid month, too large
+            (year: 2000, month: 13, day: 1, hours: 1, minutes: 1, seconds: 1),
+            // Invalid day, zero
+            (year: 2000, month: 1, day: 0, hours: 1, minutes: 1, seconds: 1),
+            // Invalid day, negative
+            (year: 2000, month: 1, day: -1, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in January
+            (year: 2000, month: 1, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // only 28 days in February 2021
+            (year: 2021, month: 2, day: 29, hours: 1, minutes: 1, seconds: 1),
+            // only 29 days in February 2020
+            (year: 2020, month: 2, day: 30, hours: 1, minutes: 1, seconds: 1),
+            // only 28 days in February 2100
+            (year: 2100, month: 2, day: 29, hours: 1, minutes: 1, seconds: 1),
+            // only 29 days in February 2000
+            (year: 2000, month: 2, day: 30, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in March
+            (year: 2000, month: 3, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // only 30 days in April
+            (year: 2000, month: 4, day: 31, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in May
+            (year: 2000, month: 5, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // only 30 days in June
+            (year: 2000, month: 6, day: 31, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in July
+            (year: 2000, month: 7, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in August
+            (year: 2000, month: 8, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // only 30 days in September
+            (year: 2000, month: 9, day: 31, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in October
+            (year: 2000, month: 10, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // only 30 days in November
+            (year: 2000, month: 11, day: 31, hours: 1, minutes: 1, seconds: 1),
+            // only 31 days in December (upstream vector)
+            (year: 2000, month: 11, day: 32, hours: 1, minutes: 1, seconds: 1),
+            // Invalid hour, negative
+            (year: 2000, month: 1, day: 1, hours: -1, minutes: 1, seconds: 1),
+            // Invalid hour, 24
+            (year: 2000, month: 1, day: 1, hours: 24, minutes: 0, seconds: 0),
+            // Invalid minute, negative
+            (year: 2000, month: 1, day: 1, hours: 0, minutes: -1, seconds: 1),
+            // Invalid minute, 60
+            (year: 2000, month: 1, day: 1, hours: 0, minutes: 60, seconds: 0),
+            // Invalid second, negative
+            (year: 2000, month: 1, day: 1, hours: 0, minutes: 0, seconds: -1),
+            // Invalid second, 62 (we allow some leap seconds)
+            (year: 2000, month: 1, day: 1, hours: 0, minutes: 0, seconds: 62),
         ]
     )
     func `out-of-bounds components rejected by both initializers`(
@@ -184,14 +211,15 @@ extension ISO_8824.GeneralizedTime.Test {
             )
         }
 
-        let integerTransformable: [(ISO_8824.GeneralizedTime, Int) throws -> ISO_8824.GeneralizedTime] = [
-            { try modify(of: $0, year: $1) },
-            { try modify(of: $0, month: $1) },
-            { try modify(of: $0, day: $1) },
-            { try modify(of: $0, hours: $1) },
-            { try modify(of: $0, minutes: $1) },
-            { try modify(of: $0, seconds: $1) },
-        ]
+        let integerTransformable:
+            [(ISO_8824.GeneralizedTime, Int) throws -> ISO_8824.GeneralizedTime] = [
+                { try modify(of: $0, year: $1) },
+                { try modify(of: $0, month: $1) },
+                { try modify(of: $0, day: $1) },
+                { try modify(of: $0, hours: $1) },
+                { try modify(of: $0, minutes: $1) },
+                { try modify(of: $0, seconds: $1) },
+            ]
 
         var transformationsAndResults: [(ISO_8824.GeneralizedTime, ExpectedComparisonResult)] = []
         transformationsAndResults.append((original, .equal))
@@ -230,11 +258,13 @@ extension ISO_8824.GeneralizedTime.Test {
                 #expect(newValue <= original)
                 #expect(original > newValue)
                 #expect(original >= newValue)
+
             case .equal:
                 #expect(newValue >= original)
                 #expect(original >= newValue)
                 #expect(newValue <= original)
                 #expect(original <= newValue)
+
             case .greaterThan:
                 #expect(newValue > original)
                 #expect(newValue >= original)

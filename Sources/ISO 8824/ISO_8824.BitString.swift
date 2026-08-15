@@ -95,7 +95,8 @@ extension ISO_8824.BitString {
         let mask = ~(UInt8.max << self.paddingBits)
         if (finalByte & mask) != 0 {
             throw ISO_8824.Error.invalidASN1Object(
-                reason: "Invalid padding bits in BitString: \(self.paddingBits) of padding, \(finalByte) final byte"
+                reason:
+                    "Invalid padding bits in BitString: \(self.paddingBits) of padding, \(finalByte) final byte"
             )
         }
     }
@@ -107,7 +108,9 @@ extension ISO_8824.BitString: Sendable {}
 
 extension ISO_8824.BitString {
     @inlinable
-    public func withUnsafeBytes<R, E: Swift.Error>(_ body: (UnsafeRawBufferPointer) throws(E) -> R) throws(E) -> R {
+    public func withUnsafeBytes<R, E: Swift.Error>(
+        _ body: (UnsafeRawBufferPointer) throws(E) -> R
+    ) throws(E) -> R {
         let result = unsafe self.bytes.withUnsafeBytes { buffer in
             Result { () throws(E) -> R in unsafe try body(buffer) }
         }
