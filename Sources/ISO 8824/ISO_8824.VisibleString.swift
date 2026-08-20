@@ -68,7 +68,7 @@ extension ISO_8824.VisibleString {
     public func withUnsafeBytes<R, E: Swift.Error>(
         _ body: (UnsafeRawBufferPointer) throws(E) -> R
     ) throws(E) -> R {
-        let result = unsafe self.bytes.withUnsafeBytes { buffer in
+        let result = self.bytes.withUnsafeBytes { buffer in
             Result { () throws(E) -> R in unsafe try body(buffer) }
         }
         return try result.get()
