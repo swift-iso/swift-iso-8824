@@ -1,17 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the SwiftASN1 open source project
-//
-// Copyright (c) 2021 Apple Inc. and the SwiftASN1 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of SwiftASN1 project authors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import ISO_8824
@@ -24,59 +10,59 @@ extension ISO_8824.GeneralizedTime {
 extension ISO_8824.GeneralizedTime.Test {
     @Test(
         arguments: [
-            // Invalid year, negative
+
             (year: -1, month: 1, day: 1, hours: 1, minutes: 1, seconds: 1),
-            // Invalid month, zero
+
             (year: 2000, month: 0, day: 1, hours: 1, minutes: 1, seconds: 1),
-            // Invalid month, negative
+
             (year: 2000, month: -1, day: 1, hours: 1, minutes: 1, seconds: 1),
-            // Invalid month, too large
+
             (year: 2000, month: 13, day: 1, hours: 1, minutes: 1, seconds: 1),
-            // Invalid day, zero
+
             (year: 2000, month: 1, day: 0, hours: 1, minutes: 1, seconds: 1),
-            // Invalid day, negative
+
             (year: 2000, month: 1, day: -1, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in January
+
             (year: 2000, month: 1, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // only 28 days in February 2021
+
             (year: 2021, month: 2, day: 29, hours: 1, minutes: 1, seconds: 1),
-            // only 29 days in February 2020
+
             (year: 2020, month: 2, day: 30, hours: 1, minutes: 1, seconds: 1),
-            // only 28 days in February 2100
+
             (year: 2100, month: 2, day: 29, hours: 1, minutes: 1, seconds: 1),
-            // only 29 days in February 2000
+
             (year: 2000, month: 2, day: 30, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in March
+
             (year: 2000, month: 3, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // only 30 days in April
+
             (year: 2000, month: 4, day: 31, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in May
+
             (year: 2000, month: 5, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // only 30 days in June
+
             (year: 2000, month: 6, day: 31, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in July
+
             (year: 2000, month: 7, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in August
+
             (year: 2000, month: 8, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // only 30 days in September
+
             (year: 2000, month: 9, day: 31, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in October
+
             (year: 2000, month: 10, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // only 30 days in November
+
             (year: 2000, month: 11, day: 31, hours: 1, minutes: 1, seconds: 1),
-            // only 31 days in December (upstream vector)
+
             (year: 2000, month: 11, day: 32, hours: 1, minutes: 1, seconds: 1),
-            // Invalid hour, negative
+
             (year: 2000, month: 1, day: 1, hours: -1, minutes: 1, seconds: 1),
-            // Invalid hour, 24
+
             (year: 2000, month: 1, day: 1, hours: 24, minutes: 0, seconds: 0),
-            // Invalid minute, negative
+
             (year: 2000, month: 1, day: 1, hours: 0, minutes: -1, seconds: 1),
-            // Invalid minute, 60
+
             (year: 2000, month: 1, day: 1, hours: 0, minutes: 60, seconds: 0),
-            // Invalid second, negative
+
             (year: 2000, month: 1, day: 1, hours: 0, minutes: 0, seconds: -1),
-            // Invalid second, 62 (we allow some leap seconds)
+
             (year: 2000, month: 1, day: 1, hours: 0, minutes: 0, seconds: 62),
         ]
     )
@@ -114,7 +100,7 @@ extension ISO_8824.GeneralizedTime.Test {
 
     @Test
     func `out-of-bounds fractional seconds rejected`() {
-        // Invalid fractional seconds, negative
+
         #expect(throws: ISO_8824.Error.self) {
             try ISO_8824.GeneralizedTime(
                 year: 2000,
@@ -126,7 +112,7 @@ extension ISO_8824.GeneralizedTime.Test {
                 fractionalSeconds: -0.5
             )
         }
-        // Invalid fractional seconds, greater than one
+
         #expect(throws: ISO_8824.Error.self) {
             try ISO_8824.GeneralizedTime(
                 year: 2000,
@@ -142,8 +128,7 @@ extension ISO_8824.GeneralizedTime.Test {
 
     @Test
     func `raw fractional seconds canonicalization`() throws {
-        // `fractionalSeconds` loses precision and becomes 0.1 (as opposed to 0.10000000000000001),
-        // but `rawFractionalSeconds` is preserved exactly.
+
         let precise = try ISO_8824.GeneralizedTime(
             year: 1985,
             month: 11,
@@ -158,7 +143,6 @@ extension ISO_8824.GeneralizedTime.Test {
         #expect(precise.fractionalSeconds == 0.1)
         #expect(precise.rawFractionalSeconds.count == 17)
 
-        // Trailing zeros in raw fractional seconds are non-canonical and rejected.
         #expect(throws: ISO_8824.Error.self) {
             try ISO_8824.GeneralizedTime(
                 year: 1992,
@@ -274,10 +258,3 @@ extension ISO_8824.GeneralizedTime.Test {
         }
     }
 }
-
-// -> ISO 8825: the wire-facing halves of upstream GeneralizedTimeTests.swift moved to
-// swift-iso-8825 with the codec:
-//   - testSimpleGeneralizedTimeTestVectors (DER string-vector parse + round-trip; the
-//     valid/invalid YYYYMMDDHHMMSS[.f]Z vector table lives with the 8825 parse tests)
-//   - testTruncatedRepresentationsRejected (truncation/junk-suffix DER parse rejection)
-//   - testRequiresAppropriateTag (tag mismatch on derEncoded init)

@@ -1,17 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the SwiftASN1 open source project
-//
-// Copyright (c) 2021 Apple Inc. and the SwiftASN1 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of SwiftASN1 project authors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import ISO_8824
@@ -228,12 +214,3 @@ extension ISO_8824.IA5String.Test {
         }
     }
 }
-
-// -> ISO 8825: the wire-facing halves of upstream ASN1StringTests.swift moved to
-// swift-iso-8825 with the codec:
-//   - per-type `test*StringEncoding` (DER.Serializer byte-vector assertions, e.g.
-//     UTF8String -> [12, 4, 1, 2, 3, 4]) and `test*StringRoundTrips` (assertRoundTrips
-//     via DER.Serializer / init(derEncoded:))
-//   - the BMPString literal test's serialized-bytes assertions ([30, 8, ...])
-//   - the `derEncoded:` rejection legs of the Printable/Visible/IA5 invalid-byte sweeps
-//     (e.g. try ASN1PrintableString(derEncoded: [0x13, 1, byte]))

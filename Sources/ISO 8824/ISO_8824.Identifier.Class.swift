@@ -1,19 +1,5 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the SwiftASN1 open source project
-//
-// Copyright (c) 2019-2020 Apple Inc. and the SwiftASN1 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of SwiftASN1 project authors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
 extension ISO_8824.Identifier {
-    /// The class of an ASN.1 tag.
+
     public enum Class: Hashable, Sendable {
         case universal
         case application

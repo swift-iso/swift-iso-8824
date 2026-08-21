@@ -1,22 +1,5 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the SwiftASN1 open source project
-//
-// Copyright (c) 2022 Apple Inc. and the SwiftASN1 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of SwiftASN1 project authors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
 extension ISO_8824 {
-    /// Calendar value law shared by ``ISO_8824/GeneralizedTime`` and ``ISO_8824/UTCTime``.
-    ///
-    /// Upstream name: `TimeUtilities`. Only the value-validity half remains here; the
-    /// wire halves migrated to swift-iso-8825 (see the trailing marker).
+
     @usableFromInline
     enum Time {}
 }
@@ -29,9 +12,7 @@ extension ISO_8824.Time {
             return 31
 
         case 2:
-            // This one has a dependency on the year!
-            // A leap year occurs in any year divisible by 4, except when that year is divisible by 100,
-            // unless the year is divisible by 400.
+
             let isLeapYear = (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))
             return isLeapYear ? 29 : 28
 
@@ -75,12 +56,10 @@ extension ISO_8824.Time {
 extension ISO_8824.Time: Sendable {}
 
 extension ArraySlice where Element == UInt8 {
-    /// Appends the canonical decimal-ASCII representation of fractional seconds
-    /// (no leading "0.", no trailing zeros). Value-canonicalization law for
-    /// ``ISO_8824/GeneralizedTime/rawFractionalSeconds``.
+
     @inlinable
     package mutating func append(fractionalSeconds: Double) throws(ISO_8824.Error) {
-        // Fractional seconds may not be negative and may not be 1 or more.
+
         guard fractionalSeconds >= 0 && fractionalSeconds < 1 else {
             throw ISO_8824.Error.invalidASN1Object(
                 reason: "Invalid fractional seconds: \(fractionalSeconds)"
@@ -99,7 +78,7 @@ extension ArraySlice where Element == UInt8 {
 }
 
 extension Double {
-    /// Computes the numerical fractional seconds from the canonical raw decimal-ASCII digits.
+
     @inlinable
     package init(
         fromRawFractionalSeconds rawFractionalSeconds: ArraySlice<UInt8>
@@ -127,14 +106,3 @@ extension Double {
         self = fractionalSeconds
     }
 }
-
-// -> ISO 8825: the wire halves of upstream TimeUtilities.swift moved to swift-iso-8825
-// with the DER/BER conformance bodies:
-//   - `TimeUtilities.generalizedTimeFromBytes(_:)` / `TimeUtilities.utcTimeFromBytes(_:)`
-//     (YYYYMMDDHHMMSS[.f]Z / YYMMDDHHMMSSZ content-octet parsing, incl. the UTCTime
-//     1950/2049 pivot `rawYear < 50 ? +2000 : +1900`)
-//   - `ArraySlice<UInt8>._readFourDigitDecimalInteger()` / `._readTwoDigitDecimalInteger()`
-//     / `._readRawFractionalSeconds()`
-//   - `Array<UInt8>.append(_ generalizedTime:)` / `.append(_ utcTime:)` /
-//     `._appendFourDigitDecimal(_:)` / `._appendTwoDigitDecimal(_:)`
-//   - `Int.init?(fromDecimalASCII:)` (used only by the moved read helpers)

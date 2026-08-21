@@ -23,10 +23,7 @@ let package = Package(
         .library(name: "ISO 8824", targets: ["ISO 8824"])
     ],
     dependencies: [
-        // Byte/byte-parser primitives deps deferred: the retained X.680 value law is
-        // stdlib-only today. Add https://github.com/swift-primitives/swift-byte-primitives.git
-        // (canonical URL per [PKG-DEP-009]) when the [UInt8] boundary judgment items resolve
-        // to Byte substrate (see byte-discipline markers in Sources).
+
     ],
     targets: [
         .target(
