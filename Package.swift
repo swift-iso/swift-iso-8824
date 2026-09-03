@@ -2,14 +2,6 @@
 
 import PackageDescription
 
-extension String {
-    static let iso8824: Self = "ISO 8824"
-}
-
-extension Target.Dependency {
-    static var iso8824: Self { .target(name: .iso8824) }
-}
-
 let package = Package(
     name: "swift-iso-8824",
     platforms: [
@@ -32,7 +24,7 @@ let package = Package(
         .testTarget(
             name: "ISO 8824 Tests",
             dependencies: [
-                "ISO 8824"
+                .target(name: "ISO 8824")
             ]
         ),
     ],
