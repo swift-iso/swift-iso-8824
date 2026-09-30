@@ -67,7 +67,13 @@ extension ArraySlice where Element == UInt8 {
         }
 
         if fractionalSeconds != 0 {
-            let fractionalSecondsAsString = String(fractionalSeconds)
+            var fractionalSecondsAsString = String(fractionalSeconds)
+            if let exponentIndex = fractionalSecondsAsString.firstIndex(of: "e"),
+                let exponent = Int(fractionalSecondsAsString[fractionalSecondsAsString.index(after: exponentIndex)...])
+            {
+                let digits = fractionalSecondsAsString[..<exponentIndex].filter { $0 != "." }
+                fractionalSecondsAsString = "0." + String(repeating: "0", count: -exponent - 1) + digits
+            }
 
             assert(fractionalSecondsAsString.starts(with: "0."), "Invalid fractional seconds")
             assert(fractionalSecondsAsString.last != "0", "Trailing zeros in fractional seconds")
@@ -86,6 +92,12 @@ extension Double {
         if rawFractionalSeconds.count == 0 {
             self = 0
             return
+        }
+
+        guard rawFractionalSeconds.allSatisfy({ $0 >= UInt8(ascii: "0") && $0 <= UInt8(ascii: "9") }) else {
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid raw fractional seconds"
+            )
         }
 
         if rawFractionalSeconds.last == UInt8(ascii: "0") {
