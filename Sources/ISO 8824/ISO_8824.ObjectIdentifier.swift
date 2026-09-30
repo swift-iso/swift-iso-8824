@@ -123,7 +123,9 @@ extension ISO_8824.ObjectIdentifier: ExpressibleByStringLiteral {
         )
 
         let elements = try octetArray.map { octet throws(ISO_8824.Error) -> UInt in
-            guard let uintOctet = UInt(Substring(octet)) else {
+            guard octet.allSatisfy({ $0 >= UInt8(ascii: "0") && $0 <= UInt8(ascii: "9") }),
+                let uintOctet = UInt(Substring(octet))
+            else {
                 throw ISO_8824.Error.invalidStringRepresentation(reason: "Invalid octet in OID")
             }
             return uintOctet
