@@ -5,7 +5,7 @@ extension ISO_8824.Integer {
 
         static var isSigned: Bool { get }
 
-        func withBigEndianIntegerBytes<ReturnType, E: Swift.Error>(
+        func withBigEndianIntegerBytes<ReturnType, E: Swift::Error>(
             _ body: (IntegerBytes) throws(E) -> ReturnType
         ) throws(E) -> ReturnType
     }
@@ -13,7 +13,7 @@ extension ISO_8824.Integer {
 
 extension ISO_8824.Integer.Representable where Self: FixedWidthInteger {
     @inlinable
-    public func withBigEndianIntegerBytes<ReturnType, E: Swift.Error>(
+    public func withBigEndianIntegerBytes<ReturnType, E: Swift::Error>(
         _ body: (ISO_8824.Integer.Bytes<Self>) throws(E) -> ReturnType
     ) throws(E) -> ReturnType {
         return try body(ISO_8824.Integer.Bytes(self))

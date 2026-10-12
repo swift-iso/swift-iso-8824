@@ -88,7 +88,7 @@ extension ISO_8824.ObjectIdentifier: Sendable {}
 extension ISO_8824.ObjectIdentifier {
 
     @inlinable
-    public init(elements: some Swift.Collection<UInt>) throws(ISO_8824.Error) {
+    public init(elements: some Swift::Collection<UInt>) throws(ISO_8824.Error) {
         var bytes = [UInt8]()
         var iterator = elements.makeIterator()
 
@@ -182,7 +182,7 @@ extension ArraySlice where Element == UInt8 {
 extension UInt {
 
     @inlinable
-    public init<Bytes: Swift.Collection>(sevenBitBigEndianBytes bytes: Bytes) throws(ISO_8824.Error)
+    public init<Bytes: Swift::Collection>(sevenBitBigEndianBytes bytes: Bytes) throws(ISO_8824.Error)
     where Bytes.Element == UInt8 {
 
         guard ((bytes.count * 7) + 7) / 8 <= MemoryLayout<UInt>.size else {

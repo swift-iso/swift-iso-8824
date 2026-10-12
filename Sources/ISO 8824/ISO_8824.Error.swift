@@ -1,6 +1,6 @@
 extension ISO_8824 {
 
-    public struct Error: Swift.Error, Hashable, CustomStringConvertible {
+    public struct Error: Swift::Error, Hashable, CustomStringConvertible {
         @usableFromInline
         let backing: Backing
 

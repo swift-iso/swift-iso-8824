@@ -37,7 +37,7 @@ extension ISO_8824.IA5String {
     }
 
     @inlinable
-    public func withUnsafeBytes<R, E: Swift.Error>(
+    public func withUnsafeBytes<R, E: Swift::Error>(
         _ body: (UnsafeRawBufferPointer) throws(E) -> R
     ) throws(E) -> R {
         let result = self.bytes.withUnsafeBytes { buffer in
