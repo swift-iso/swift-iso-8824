@@ -195,15 +195,14 @@ extension ISO_8824.GeneralizedTime.Test {
             )
         }
 
-        let integerTransformable:
-            [(ISO_8824.GeneralizedTime, Int) throws -> ISO_8824.GeneralizedTime] = [
-                { try modify(of: $0, year: $1) },
-                { try modify(of: $0, month: $1) },
-                { try modify(of: $0, day: $1) },
-                { try modify(of: $0, hours: $1) },
-                { try modify(of: $0, minutes: $1) },
-                { try modify(of: $0, seconds: $1) },
-            ]
+        let integerTransformable: [(ISO_8824.GeneralizedTime, Int) throws -> ISO_8824.GeneralizedTime] = [
+            { try modify(of: $0, year: $1) },
+            { try modify(of: $0, month: $1) },
+            { try modify(of: $0, day: $1) },
+            { try modify(of: $0, hours: $1) },
+            { try modify(of: $0, minutes: $1) },
+            { try modify(of: $0, seconds: $1) },
+        ]
 
         var transformationsAndResults: [(ISO_8824.GeneralizedTime, ExpectedComparisonResult)] = []
         transformationsAndResults.append((original, .equal))

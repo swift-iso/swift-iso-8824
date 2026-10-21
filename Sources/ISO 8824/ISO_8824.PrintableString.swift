@@ -78,6 +78,10 @@ extension ISO_8824.PrintableString: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
 
-        try! self.init(contentBytes: ArraySlice(value.utf8))
+        do {
+            try self.init(contentBytes: ArraySlice(value.utf8))
+        } catch {
+            preconditionFailure("PrintableString literal must be valid: \(error)")
+        }
     }
 }

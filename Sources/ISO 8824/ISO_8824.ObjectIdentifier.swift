@@ -112,7 +112,11 @@ extension ISO_8824.ObjectIdentifier: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral dotRepresentation: String) {
 
-        try! self.init(dotRepresentation: dotRepresentation)
+        do {
+            try self.init(dotRepresentation: dotRepresentation)
+        } catch {
+            preconditionFailure("ObjectIdentifier literal must be valid: \(error)")
+        }
     }
 
     @inlinable
@@ -144,7 +148,11 @@ extension ISO_8824.ObjectIdentifier: ExpressibleByArrayLiteral {
     @inlinable
     public init(arrayLiteral elements: UInt...) {
 
-        try! self.init(elements: elements)
+        do {
+            try self.init(elements: elements)
+        } catch {
+            preconditionFailure("ObjectIdentifier literal must be valid: \(error)")
+        }
     }
 }
 

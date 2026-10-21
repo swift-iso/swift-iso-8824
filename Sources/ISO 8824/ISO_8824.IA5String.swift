@@ -61,6 +61,10 @@ extension ISO_8824.IA5String: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
 
-        try! self.init(contentBytes: ArraySlice(value.utf8))
+        do {
+            try self.init(contentBytes: ArraySlice(value.utf8))
+        } catch {
+            preconditionFailure("IA5String literal must be valid: \(error)")
+        }
     }
 }

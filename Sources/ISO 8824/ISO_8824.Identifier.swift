@@ -37,6 +37,7 @@ extension ISO_8824.Identifier {
 
 extension ISO_8824.Identifier {
 
+    // swift-format-ignore: DontRepeatTypeInStaticProperties
     public static let objectIdentifier = ISO_8824.Identifier(shortIdentifier: 0x06)
 
     public static let bitString = ISO_8824.Identifier(shortIdentifier: 0x03)
