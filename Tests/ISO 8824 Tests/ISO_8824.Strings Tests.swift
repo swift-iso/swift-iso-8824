@@ -2,12 +2,14 @@ import Testing
 
 @testable import ISO_8824
 
-extension ISO_8824.UTF8String {
+enum `ISO_8824.UTF8String Tests` {}
+
+extension `ISO_8824.UTF8String Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.UTF8String.Test {
+extension `ISO_8824.UTF8String Tests`.Test {
     @Test
     func `contiguous bytes view matches content`() {
         let string = ISO_8824.UTF8String(contentBytes: [1, 2, 3, 4])
@@ -23,12 +25,14 @@ extension ISO_8824.UTF8String.Test {
     }
 }
 
-extension ISO_8824.TeletexString {
+enum `ISO_8824.TeletexString Tests` {}
+
+extension `ISO_8824.TeletexString Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.TeletexString.Test {
+extension `ISO_8824.TeletexString Tests`.Test {
     @Test
     func `contiguous bytes view matches content`() {
         let string = ISO_8824.TeletexString(contentBytes: [1, 2, 3, 4])
@@ -36,12 +40,14 @@ extension ISO_8824.TeletexString.Test {
     }
 }
 
-extension ISO_8824.PrintableString {
+enum `ISO_8824.PrintableString Tests` {}
+
+extension `ISO_8824.PrintableString Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.PrintableString.Test {
+extension `ISO_8824.PrintableString Tests`.Test {
     @Test
     func `contiguous bytes view matches content`() throws {
         let string = try ISO_8824.PrintableString(contentBytes: [0x54, 0x65, 0x73, 0x74])
@@ -100,12 +106,14 @@ extension ISO_8824.PrintableString.Test {
     }
 }
 
-extension ISO_8824.VisibleString {
+enum `ISO_8824.VisibleString Tests` {}
+
+extension `ISO_8824.VisibleString Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.VisibleString.Test {
+extension `ISO_8824.VisibleString Tests`.Test {
     @Test
     func `contiguous bytes view matches content`() throws {
         let string = try ISO_8824.VisibleString(contentBytes: [0x20, 0x30, 0x7a, 0x7e])
@@ -144,12 +152,14 @@ extension ISO_8824.VisibleString.Test {
     }
 }
 
-extension ISO_8824.UniversalString {
+enum `ISO_8824.UniversalString Tests` {}
+
+extension `ISO_8824.UniversalString Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.UniversalString.Test {
+extension `ISO_8824.UniversalString Tests`.Test {
     @Test
     func `contiguous bytes view matches content`() {
         let string = ISO_8824.UniversalString(contentBytes: [1, 2, 3, 4])
@@ -157,12 +167,14 @@ extension ISO_8824.UniversalString.Test {
     }
 }
 
-extension ISO_8824.BMPString {
+enum `ISO_8824.BMPString Tests` {}
+
+extension `ISO_8824.BMPString Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.BMPString.Test {
+extension `ISO_8824.BMPString Tests`.Test {
     @Test
     func `contiguous bytes view matches content`() {
         let string = ISO_8824.BMPString(contentBytes: [1, 2, 3, 4])
@@ -182,12 +194,14 @@ extension ISO_8824.BMPString.Test {
     }
 }
 
-extension ISO_8824.IA5String {
+enum `ISO_8824.IA5String Tests` {}
+
+extension `ISO_8824.IA5String Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.IA5String.Test {
+extension `ISO_8824.IA5String Tests`.Test {
     @Test
     func `round-trips through String`() throws {
         let string = "hello, world"

@@ -2,12 +2,14 @@ import Testing
 
 @testable import ISO_8824
 
-extension ISO_8824.UTCTime {
+enum `ISO_8824.UTCTime Tests` {}
+
+extension `ISO_8824.UTCTime Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.UTCTime.Test {
+extension `ISO_8824.UTCTime Tests`.Test {
     @Test
     func `comparisons order by component significance`() throws {
         enum ExpectedComparisonResult {

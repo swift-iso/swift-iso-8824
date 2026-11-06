@@ -2,12 +2,14 @@ import Testing
 
 @testable import ISO_8824
 
-extension ISO_8824.GeneralizedTime {
+enum `ISO_8824.GeneralizedTime Tests` {}
+
+extension `ISO_8824.GeneralizedTime Tests` {
     @Suite
     struct Test {}
 }
 
-extension ISO_8824.GeneralizedTime.Test {
+extension `ISO_8824.GeneralizedTime Tests`.Test {
     @Test(
         arguments: [
 
