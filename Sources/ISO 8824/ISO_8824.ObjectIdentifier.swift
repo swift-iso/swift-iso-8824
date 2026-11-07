@@ -224,7 +224,7 @@ extension Array where Element == UInt8 {
             return
         }
 
-        for byteNumber in (1..<bytesToWrite).reversed() {
+        (1..<bytesToWrite).reversed().forEach { byteNumber in
             let shift = byteNumber * 7
             let byte = UInt8((identifier >> shift) & 0x7f) | 0x80
             self.append(byte)
