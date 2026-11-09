@@ -39,7 +39,7 @@ extension ISO_8824.UniversalString: ExpressibleByStringLiteral {
         self.init(
             contentBytes: ArraySlice(
                 // swift-linter:disable:next string utf8 scanning
-                // REASON: ISO/IEC 8824-1 (ITU-T X.680) clause 41, Table 8: UniversalString is the ISO/IEC 10646 four-octet canonical form, one 32-bit code per Unicode scalar, so the encoding is defined over code points, not UTF-8 bytes.
+                // REASON: ISO/IEC 8824-1 (ITU-T X.680): UniversalString is the ISO/IEC 10646 four-octet canonical form, one 32-bit code per Unicode scalar, so the encoding is defined over code points, not UTF-8 bytes.
                 value.unicodeScalars.flatMap { scalar in
                     [
                         UInt8(truncatingIfNeeded: scalar.value >> 24),
