@@ -36,19 +36,18 @@ extension ISO_8824.UniversalString: Sendable {}
 extension ISO_8824.UniversalString: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
-        self.init(
-            contentBytes: ArraySlice(
-                // swift-linter:disable:next string utf8 scanning
-                // REASON: ISO/IEC 8824-1 (ITU-T X.680): UniversalString is the ISO/IEC 10646 four-octet canonical form, one 32-bit code per Unicode scalar, so the encoding is defined over code points, not UTF-8 bytes.
-                value.unicodeScalars.flatMap { scalar in
-                    [
-                        UInt8(truncatingIfNeeded: scalar.value >> 24),
-                        UInt8(truncatingIfNeeded: scalar.value >> 16),
-                        UInt8(truncatingIfNeeded: scalar.value >> 8),
-                        UInt8(truncatingIfNeeded: scalar.value),
-                    ]
-                }
-            )
-        )
+        var content: [UInt8] = []
+        _ = transcode(
+            value.utf8.makeIterator(),
+            from: UTF8.self,
+            to: UTF32.self,
+            stoppingOnError: false
+        ) { scalar in
+            content.append(UInt8(truncatingIfNeeded: scalar >> 24))
+            content.append(UInt8(truncatingIfNeeded: scalar >> 16))
+            content.append(UInt8(truncatingIfNeeded: scalar >> 8))
+            content.append(UInt8(truncatingIfNeeded: scalar))
+        }
+        self.init(contentBytes: ArraySlice(content))
     }
 }
