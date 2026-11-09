@@ -165,6 +165,18 @@ extension `ISO_8824.UniversalString Tests`.Test {
         let string = ISO_8824.UniversalString(contentBytes: [1, 2, 3, 4])
         unsafe string.withUnsafeBytes { #expect(unsafe $0.elementsEqual([1, 2, 3, 4])) }
     }
+
+    @Test(
+        arguments: [
+            (literal: "Te", ucs4: [UInt8]([0, 0, 0, 84, 0, 0, 0, 101])),
+            (literal: "中", ucs4: [UInt8]([0, 0, 78, 45])),
+            (literal: "😀", ucs4: [UInt8]([0, 1, 246, 0])),
+        ]
+    )
+    func `string literal produces big-endian UCS-4 code points`(literal: String, ucs4: [UInt8]) {
+        let string = ISO_8824.UniversalString(stringLiteral: literal)
+        #expect(Array(string.bytes) == ucs4)
+    }
 }
 
 enum `ISO_8824.BMPString Tests` {}

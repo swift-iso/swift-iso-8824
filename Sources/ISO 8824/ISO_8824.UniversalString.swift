@@ -36,6 +36,17 @@ extension ISO_8824.UniversalString: Sendable {}
 extension ISO_8824.UniversalString: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
-        self.init(contentBytes: ArraySlice(value.utf8))
+        self.init(
+            contentBytes: ArraySlice(
+                value.unicodeScalars.flatMap { scalar in
+                    [
+                        UInt8(truncatingIfNeeded: scalar.value >> 24),
+                        UInt8(truncatingIfNeeded: scalar.value >> 16),
+                        UInt8(truncatingIfNeeded: scalar.value >> 8),
+                        UInt8(truncatingIfNeeded: scalar.value),
+                    ]
+                }
+            )
+        )
     }
 }
