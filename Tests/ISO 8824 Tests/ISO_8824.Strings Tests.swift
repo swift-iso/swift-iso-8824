@@ -11,9 +11,33 @@ extension `ISO_8824.UTF8String Tests` {
 
 extension `ISO_8824.UTF8String Tests`.Test {
     @Test
-    func `contiguous bytes view matches content`() {
-        let string = ISO_8824.UTF8String(contentBytes: [1, 2, 3, 4])
+    func `contiguous bytes view matches content`() throws {
+        let string = try ISO_8824.UTF8String(contentBytes: [1, 2, 3, 4])
         unsafe string.withUnsafeBytes { #expect(unsafe $0.elementsEqual([1, 2, 3, 4])) }
+    }
+
+    @Test(
+        arguments: [
+            [UInt8]([0xFF]),
+            [0x80],
+            [0xC3],
+            [0xC0, 0x80],
+            [0xED, 0xA0, 0x80],
+            [0xF4, 0x90, 0x80, 0x80],
+            [0x61, 0xE4, 0xB8],
+        ]
+    )
+    func `rejects bytes that are not UTF-8`(_ bytes: [UInt8]) {
+        #expect(throws: ISO_8824.Error.self) {
+            try ISO_8824.UTF8String(contentBytes: bytes[...])
+        }
+    }
+
+    @Test
+    func `accepts multi-byte UTF-8`() throws {
+        let bytes = Array("a中😀".utf8)
+        let string = try ISO_8824.UTF8String(contentBytes: bytes[...])
+        #expect(String(string) == "a中😀")
     }
 
     @Test

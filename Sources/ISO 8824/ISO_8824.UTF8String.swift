@@ -2,11 +2,20 @@ extension ISO_8824 {
 
     public struct UTF8String {
 
-        public var bytes: ArraySlice<UInt8>
+        public var bytes: ArraySlice<UInt8> {
+            didSet {
+                precondition(Self._isValid(self.bytes))
+            }
+        }
 
         @inlinable
-        public init(contentBytes: ArraySlice<UInt8>) {
+        public init(contentBytes: ArraySlice<UInt8>) throws(ISO_8824.Error) {
             self.bytes = contentBytes
+            guard Self._isValid(self.bytes) else {
+                throw ISO_8824.Error.invalidStringRepresentation(
+                    reason: "Invalid bytes for UTF8String"
+                )
+            }
         }
     }
 }
@@ -20,7 +29,12 @@ extension ISO_8824.UTF8String {
 
     @inlinable
     public init(_ string: String) {
-        self.init(contentBytes: ArraySlice(string.utf8))
+        self.bytes = ArraySlice(string.utf8)
+    }
+
+    @inlinable
+    package static func _isValid(_ bytes: ArraySlice<UInt8>) -> Bool {
+        String(validating: bytes, as: UTF8.self) != nil
     }
 
     @inlinable
@@ -41,6 +55,6 @@ extension ISO_8824.UTF8String: Sendable {}
 extension ISO_8824.UTF8String: ExpressibleByStringLiteral {
     @inlinable
     public init(stringLiteral value: StringLiteralType) {
-        self.init(contentBytes: ArraySlice(value.utf8))
+        self.init(value)
     }
 }
