@@ -32,10 +32,3 @@ extension ISO_8824.TeletexString {
 extension ISO_8824.TeletexString: Hashable {}
 
 extension ISO_8824.TeletexString: Sendable {}
-
-extension ISO_8824.TeletexString: ExpressibleByStringLiteral {
-    @inlinable
-    public init(stringLiteral value: StringLiteralType) {
-        self.init(contentBytes: ArraySlice(value.utf8))
-    }
-}
