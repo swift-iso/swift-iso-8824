@@ -66,9 +66,10 @@ extension ISO_8824.ObjectIdentifier {
             )
         }
 
-        let (firstSubcomponent, secondSubcomponent) = firstEncodedSubcomponent.quotientAndRemainder(
-            dividingBy: 40
-        )
+        let (firstSubcomponent, secondSubcomponent) =
+            firstEncodedSubcomponent < 80
+            ? firstEncodedSubcomponent.quotientAndRemainder(dividingBy: 40)
+            : (2, firstEncodedSubcomponent - 80)
         oidComponents.append(firstSubcomponent)
         oidComponents.append(secondSubcomponent)
         oidComponents.append(contentsOf: subcomponentSlice)
@@ -98,7 +99,17 @@ extension ISO_8824.ObjectIdentifier {
             )
         }
 
-        let serializedFirstComponent = (firstComponent * 40) + secondComponent
+        guard firstComponent <= 2, firstComponent == 2 || secondComponent < 40 else {
+            throw ISO_8824.Error.invalidASN1Object(
+                reason: "Invalid leading OID arcs: \(firstComponent).\(secondComponent)"
+            )
+        }
+
+        let (serializedFirstComponent, overflow) = (firstComponent * 40)
+            .addingReportingOverflow(secondComponent)
+        guard !overflow else {
+            throw ISO_8824.Error.invalidASN1Object(reason: "Unable to store OID subidentifier")
+        }
         ISO_8824.ObjectIdentifier._writeOIDSubidentifier(serializedFirstComponent, into: &bytes)
 
         while let component = iterator.next() {
