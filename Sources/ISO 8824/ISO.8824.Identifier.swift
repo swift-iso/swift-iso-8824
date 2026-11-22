@@ -1,0 +1,95 @@
+extension ISO.`8824` {
+
+    public struct Identifier {
+
+        public var tagNumber: UInt
+
+        public var tagClass: Class
+
+        @inlinable
+        public init(tagWithNumber number: UInt, tagClass: Class) {
+            self.tagNumber = number
+            self.tagClass = tagClass
+        }
+    }
+}
+
+extension ISO.`8824`.Identifier {
+    @inlinable
+    package var _shortForm: UInt8? {
+
+        guard self.tagNumber < 0x1f else { return nil }
+
+        var baseNumber = UInt8(truncatingIfNeeded: self.tagNumber)
+        baseNumber |= self.tagClass._topByteFlags
+        return baseNumber
+    }
+
+    @inlinable
+    package init(shortIdentifier: UInt8) {
+        precondition(shortIdentifier & 0x1F != 0x1F)
+        self.init(
+            tagWithNumber: UInt(shortIdentifier & 0x1f),
+            tagClass: Class(topByteInWireFormat: shortIdentifier)
+        )
+    }
+}
+
+extension ISO.`8824`.Identifier {
+
+    // swift-format-ignore: DontRepeatTypeInStaticProperties
+    public static let objectIdentifier = ISO.`8824`.Identifier(shortIdentifier: 0x06)
+
+    public static let bitString = ISO.`8824`.Identifier(shortIdentifier: 0x03)
+
+    public static let octetString = ISO.`8824`.Identifier(shortIdentifier: 0x04)
+
+    public static let integer = ISO.`8824`.Identifier(shortIdentifier: 0x02)
+
+    public static let sequence = ISO.`8824`.Identifier(shortIdentifier: 0x30)
+
+    public static let set = ISO.`8824`.Identifier(shortIdentifier: 0x31)
+
+    public static let null = ISO.`8824`.Identifier(shortIdentifier: 0x05)
+
+    public static let boolean = ISO.`8824`.Identifier(shortIdentifier: 0x01)
+
+    public static let enumerated = ISO.`8824`.Identifier(shortIdentifier: 0x0a)
+
+    public static let utf8String = ISO.`8824`.Identifier(shortIdentifier: 0x0c)
+
+    public static let numericString = ISO.`8824`.Identifier(shortIdentifier: 0x12)
+
+    public static let printableString = ISO.`8824`.Identifier(shortIdentifier: 0x13)
+
+    public static let teletexString = ISO.`8824`.Identifier(shortIdentifier: 0x14)
+
+    public static let videotexString = ISO.`8824`.Identifier(shortIdentifier: 0x15)
+
+    public static let ia5String = ISO.`8824`.Identifier(shortIdentifier: 0x16)
+
+    public static let graphicString = ISO.`8824`.Identifier(shortIdentifier: 0x19)
+
+    public static let visibleString = ISO.`8824`.Identifier(shortIdentifier: 0x1a)
+
+    public static let generalString = ISO.`8824`.Identifier(shortIdentifier: 0x1b)
+
+    public static let universalString = ISO.`8824`.Identifier(shortIdentifier: 0x1c)
+
+    public static let bmpString = ISO.`8824`.Identifier(shortIdentifier: 0x1e)
+
+    public static let generalizedTime = ISO.`8824`.Identifier(shortIdentifier: 0x18)
+
+    public static let utcTime = ISO.`8824`.Identifier(shortIdentifier: 0x17)
+}
+
+extension ISO.`8824`.Identifier: Hashable {}
+
+extension ISO.`8824`.Identifier: Sendable {}
+
+extension ISO.`8824`.Identifier: CustomStringConvertible {
+    @inlinable
+    public var description: String {
+        return "ISO.8824.Identifier(tagNumber: \(self.tagNumber), tagClass: \(self.tagClass))"
+    }
+}
